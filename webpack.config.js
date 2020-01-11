@@ -1,4 +1,5 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./app/index.js",
@@ -24,5 +25,12 @@ module.exports = {
       }
     ]
   },
-  mode: "development"
+  mode: "development",
+  // plugins allow webpack to execute certain tasks after the bundle 
+  // has been created.
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "app/index.html"
+    })
+  ]
 };
