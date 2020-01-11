@@ -8,6 +8,12 @@ module.exports = {
   },
   module: {
     rules: [
+      // run babel-loader on every .js file
+      // and specify the transformations we want babel to make in package.json
+      {
+        test: /\.js$/,
+        use: "babel-loader"
+      },
       // As every .css file is being imported/loaded, 
       // the loader preprocesses/transforms the source code of the module.
       //   css-loader: @import url(style.css) => require('./style.css')
