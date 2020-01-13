@@ -26,6 +26,11 @@ export default class Popular extends React.Component {
           <li key={language}>
             <button
               className="btn-clear nav-link"
+              style={
+                language === this.state.selectedLanguage
+                  ? { color: "hsl(4, 90%, 58%)" }
+                  : null
+              }
               onClick={() => this.updateLanguage(language)}
             >
               {language}
