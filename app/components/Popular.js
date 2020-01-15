@@ -33,7 +33,7 @@ export default class Popular extends React.Component {
 
     this.state = {
       selectedTopic: "JavaScript",
-      repos: null,
+      repos: {},
       error: null
     };
 
@@ -48,29 +48,36 @@ export default class Popular extends React.Component {
   updateTopic(selectedTopic) {
     this.setState({
       selectedTopic,
-      repos: null,
       error: null
     });
 
-    fetchPopularRepos(selectedTopic)
-      .then(repos => {
-        this.setState({
-          repos,
-          error: null
-        });
-      })
-      .catch(() => {
-        console.warn("Error fetching repos", error);
+    if (!this.state.repos[selectedTopic]) {
+      fetchPopularRepos(selectedTopic)
+        .then(data => {
+          this.setState(currentState => ({
+            repos: {
+              ...currentState.repos,
+              [selectedTopic]: data
+            }
+          }));
+        })
+        .catch(() => {
+          console.warn("Error fetching repos", error);
 
-        this.setState({
-          error: "There was an error fetching the repositories"
+          this.setState({
+            error: "There was an error fetching the repositories"
+          });
         });
-      });
+    }
   }
   isLoading() {
-    return this.state.repos === null && this.state.error === null;
+    const { selectedTopic, repos, error } = this.state;
+
+    return !repos[selectedTopic] && error === null;
   }
   render() {
+    const { selectedTopic, repos, error } = this.state;
+
     return (
       <React.Fragment>
         <Nav
@@ -79,9 +86,9 @@ export default class Popular extends React.Component {
         />
 
         {this.isLoading() && <p>LOADING</p>}
-        {this.state.error && <p>{this.state.error}</p>}
-        {this.state.repos && (
-          <pre>{JSON.stringify(this.state.repos, null, 2)}</pre>
+        {error && <p>{this.state.error}</p>}
+        {repos[selectedTopic] && (
+          <pre>{JSON.stringify(repos[selectedTopic], null, 2)}</pre>
         )}
       </React.Fragment>
     );
