@@ -27,6 +27,18 @@ Nav.propTypes = {
   onUpdateTopic: PropTypes.func.isRequired
 };
 
+function RepoCards({ repos }) {
+  return (
+    <ul>
+      <pre>{JSON.stringify(repos, null, 2)}</pre>
+    </ul>
+  );
+}
+
+RepoCards.props = {
+  repos: PropTypes.array.isRequired
+};
+
 export default class Popular extends React.Component {
   constructor(props) {
     super(props);
@@ -87,9 +99,7 @@ export default class Popular extends React.Component {
 
         {this.isLoading() && <p>LOADING</p>}
         {error && <p>{this.state.error}</p>}
-        {repos[selectedTopic] && (
-          <pre>{JSON.stringify(repos[selectedTopic], null, 2)}</pre>
-        )}
+        {repos[selectedTopic] && <RepoCards repos={repos[selectedTopic]} />}
       </React.Fragment>
     );
   }
