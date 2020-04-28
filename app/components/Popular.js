@@ -78,7 +78,7 @@ function RepoCards({ repos }) {
   );
 }
 
-RepoCards.props = {
+RepoCards.propTypes = {
   repos: PropTypes.array.isRequired
 };
 
