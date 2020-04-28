@@ -33,7 +33,7 @@ class PlayerInput extends React.Component {
     super(props);
 
     this.state = {
-      username: ""
+      username: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,24 +48,31 @@ class PlayerInput extends React.Component {
 
   handleChange(event) {
     this.setState({
-      username: event.target.value
+      username: event.target.value,
     });
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="username">{this.props.label}</label>
-        <div>
+      <form className="column player" onSubmit={this.handleSubmit}>
+        <label className="player-label" htmlFor="username">
+          {this.props.label}
+        </label>
+        <div className="row player-inputs">
           <input
             type="text"
             id="username"
+            className="input-light"
             placeholder="github username"
             autoComplete="off"
             value={this.state.username}
             onChange={this.handleChange}
           />
-          <button type="submit" disabled={!this.state.username}>
+          <button
+            className="btn dark-btn"
+            type="submit"
+            disabled={!this.state.username}
+          >
             Submit
           </button>
         </div>
@@ -76,7 +83,7 @@ class PlayerInput extends React.Component {
 
 PlayerInput.propTypes = {
   label: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default class Battle extends React.Component {
@@ -84,7 +91,7 @@ export default class Battle extends React.Component {
     return (
       <React.Fragment>
         <Instructions />
-        <PlayerInput label="myname" onSubmit={value => console.log(value)} />
+        <PlayerInput label="myname" onSubmit={(value) => console.log(value)} />
       </React.Fragment>
     );
   }
