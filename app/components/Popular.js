@@ -7,7 +7,9 @@ import {
   FaCodeBranch,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import Card from "./card";
+import Card from "./Card";
+import Loading from "./Loading";
+
 function Nav({ selected, onUpdateTopic }) {
   const topics = ["JavaScript", "React", "Vue", "Angular", "Ember", "Polymer"];
 
@@ -140,7 +142,7 @@ export default class Popular extends React.Component {
       <React.Fragment>
         <Nav selected={selectedTopic} onUpdateTopic={this.updateTopic} />
 
-        {this.isLoading() && <p>LOADING</p>}
+        {this.isLoading() && <Loading text="Fetching Repos"/>}
         {error && <p className="center-text error">{error}</p>}
         {repos[selectedTopic] && <RepoCards repos={repos[selectedTopic]} />}
       </React.Fragment>
