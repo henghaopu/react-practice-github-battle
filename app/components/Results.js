@@ -10,7 +10,10 @@ import {
 } from "react-icons/fa";
 import Card from "./Card";
 import PropTypes from "prop-types";
-import Loading from './Loading';
+import Loading from "./Loading";
+// This Tooltip is exported from withHover(Tooltip)
+import Tooltip from "./Tooltip";
+
 function ProfileList({ profile }) {
   return (
     <ul className="card-list">
@@ -20,14 +23,19 @@ function ProfileList({ profile }) {
       </li>
       {profile.location && (
         <li>
-          <FaCompass color="rgb(144, 115, 255)" size={22} />
-          {profile.location}
+          {/* text is gonna be a prop of WithHover */} 
+          <Tooltip text="User's location">
+            <FaCompass color="rgb(144, 115, 255)" size={22} />
+              {profile.location}
+          </Tooltip>
         </li>
       )}
       {profile.company && (
         <li>
-          <FaBriefcase color="rgb(121, 195, 245)" size={22} />
-          {profile.company}
+          <Tooltip text="User's company">
+            <FaBriefcase color="rgb(121, 195, 245)" size={22} />
+              {profile.company}
+          </Tooltip>
         </li>
       )}
       <li>
@@ -81,7 +89,7 @@ export default class Results extends React.Component {
     const { winner, loser, error, loading } = this.state;
 
     if (loading) {
-      return <Loading text="Battling"/>;
+      return <Loading text="Battling" />;
     }
 
     if (error) {
@@ -110,10 +118,7 @@ export default class Results extends React.Component {
             <ProfileList profile={loser.profile} />
           </Card>
         </div>
-        <button 
-          className="btn dark-btn btn-space"
-          onClick={onReset}
-          >
+        <button className="btn dark-btn btn-space" onClick={onReset}>
           Reset
         </button>
       </React.Fragment>
