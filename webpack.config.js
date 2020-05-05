@@ -6,7 +6,9 @@ module.exports = {
   entry: "./app/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "index_bundle.js"
+    filename: "index_bundle.js",
+    // webpack-devserver: 404s will fallback to /index.html
+    publicPath: '/'
   },
   module: {
     rules: [
@@ -33,5 +35,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "app/index.html"
     })
-  ]
+  ],
+  // webpack-devserver: 404s will fallback 
+  devServer: {
+    historyApiFallback: true
+  }
 };
