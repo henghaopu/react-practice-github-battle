@@ -91,24 +91,17 @@ RepoCards.propTypes = {
 };
 
 export default class Popular extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedTopic: "JavaScript",
-      repos: {},
-      error: null,
-    };
-
-    this.updateTopic = this.updateTopic.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
+  state = {
+    selectedTopic: "JavaScript",
+    repos: {},
+    error: null,
+  };
 
   componentDidMount() {
     this.updateTopic(this.state.selectedTopic);
   }
 
-  updateTopic(selectedTopic) {
+  updateTopic = (selectedTopic) => {
     this.setState({
       selectedTopic,
       error: null,
@@ -132,12 +125,12 @@ export default class Popular extends React.Component {
           });
         });
     }
-  }
-  isLoading() {
+  };
+  isLoading = () => {
     const { selectedTopic, repos, error } = this.state;
 
     return !repos[selectedTopic] && error === null;
-  }
+  };
   render() {
     const { selectedTopic, repos, error } = this.state;
 
@@ -145,7 +138,7 @@ export default class Popular extends React.Component {
       <React.Fragment>
         <Nav selected={selectedTopic} onUpdateTopic={this.updateTopic} />
 
-        {this.isLoading() && <Loading text="Fetching Repos"/>}
+        {this.isLoading() && <Loading text="Fetching Repos" />}
         {error && <p className="center-text error">{error}</p>}
         {repos[selectedTopic] && <RepoCards repos={repos[selectedTopic]} />}
       </React.Fragment>

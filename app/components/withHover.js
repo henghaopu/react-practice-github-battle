@@ -7,37 +7,17 @@ const styles = {
   },
 };
 
-export default function withHover(Component, propName = 'hovering') {
+export default function withHover(Component, propName = "hovering") {
   return class WithHover extends React.Component {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        hovering: false,
-      };
-
-      this.mouseOver = this.mouseOver.bind(this);
-      this.mouseOut = this.mouseOut.bind(this);
-    }
-
-    mouseOver() {
-      this.setState({
-        hovering: true,
-      });
-    }
-
-    mouseOut() {
-      this.setState({
-        hovering: false,
-      });
-    }
-
+    state = { hovering: false };
+    mouseOver = () => this.setState({ hovering: true });
+    mouseOut = () => this.setState({ hovering: false });
+    
     render() {
-
       const props = {
         [propName]: this.state.hovering,
-        ...this.props
-      }
+        ...this.props,
+      };
 
       return (
         <div
@@ -45,7 +25,7 @@ export default function withHover(Component, propName = 'hovering') {
           onMouseOut={this.mouseOut}
           style={styles.container}
         >
-          <Component {...props}/>
+          <Component {...props} />
         </div>
       );
     }
