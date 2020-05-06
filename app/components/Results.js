@@ -13,6 +13,8 @@ import PropTypes from "prop-types";
 import Loading from "./Loading";
 // This Tooltip is exported from withHover(Tooltip)
 import Tooltip from "./Tooltip";
+import queryString from "query-string";
+import { Link } from "react-router-dom";
 
 function ProfileList({ profile }) {
   return (
@@ -23,10 +25,10 @@ function ProfileList({ profile }) {
       </li>
       {profile.location && (
         <li>
-          {/* text is gonna be a prop of WithHover */} 
+          {/* text is gonna be a prop of WithHover */}
           <Tooltip text="User's location">
             <FaCompass color="rgb(144, 115, 255)" size={22} />
-              {profile.location}
+            {profile.location}
           </Tooltip>
         </li>
       )}
@@ -34,7 +36,7 @@ function ProfileList({ profile }) {
         <li>
           <Tooltip text="User's company">
             <FaBriefcase color="rgb(121, 195, 245)" size={22} />
-              {profile.company}
+            {profile.company}
           </Tooltip>
         </li>
       )}
@@ -66,7 +68,9 @@ export default class Results extends React.Component {
     };
   }
   componentDidMount() {
-    const { playerOne, playerTwo } = this.props;
+    const { playerOne, playerTwo } = queryString.parse(
+      this.props.location.search
+    );
     battle([playerOne, playerTwo])
       .then((players) => {
         this.setState({
@@ -118,16 +122,10 @@ export default class Results extends React.Component {
             <ProfileList profile={loser.profile} />
           </Card>
         </div>
-        <button className="btn dark-btn btn-space" onClick={onReset}>
+        <Link className="btn dark-btn btn-space" to="/battle">
           Reset
-        </button>
+        </Link>
       </React.Fragment>
     );
   }
 }
-
-Results.propTypes = {
-  playerOne: PropTypes.string.isRequired,
-  playerTwo: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired,
-};
