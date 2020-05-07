@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack");
+const CopyPlugin = require('copy-webpack-plugin');
+
 
 module.exports = {
   entry: "./app/index.js",
@@ -35,6 +36,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "app/index.html",
     }),
+    new CopyPlugin([
+      { from: '_redirects' }
+    ])
   ],
   // webpack-devserver: 404s will fallback
   devServer: {
